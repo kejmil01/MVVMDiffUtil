@@ -13,6 +13,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         ActivityMainBinding viewDataBinding = DataBindingUtil.setContentView(this, R.layout.activity_main);
-        viewDataBinding.setViewModel(new MainViewModel());
+        viewDataBinding.setViewModel(new MainViewModel(viewDataBinding.compoundRecycler));
     }
 }

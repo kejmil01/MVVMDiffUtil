@@ -1,4 +1,4 @@
-package net.fezzed.mvvmdiffutil.util;
+package net.fezzed.mvvmdiffutil.databinding;
 
 import android.databinding.BindingAdapter;
 import android.widget.TextView;

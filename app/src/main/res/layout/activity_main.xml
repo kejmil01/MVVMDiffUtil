@@ -56,6 +56,12 @@
             android:text="@string/new_items_button"
             android:textAllCaps="true"/>
 
+        <net.fezzed.mvvmdiffutil.view.CompoundRecyclerView
+            android:id="@+id/compoundRecycler"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/add_more_button"/>
+
     </RelativeLayout>
 
 </layout>
