@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:bind="http://schemas.android.com/apk/res-auto">
 
     <data>
 
@@ -28,7 +29,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:onClick="@{(v) -> viewModel.onSwitchEventClick()}"
+                android:onClick="@{(v) -> viewModel.onSwitchEvenClick()}"
                 android:text="@string/switch_event_button"
                 android:textAllCaps="true"/>
 
@@ -80,7 +81,8 @@
             android:id="@+id/compoundRecycler"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_below="@id/bottomButtonWrapper"/>
+            android:layout_below="@id/bottomButtonWrapper"
+            bind:modelList="@{viewModel.modelList}"/>
 
     </RelativeLayout>
 

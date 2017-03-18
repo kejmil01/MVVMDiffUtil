@@ -36,6 +36,9 @@ public class CompoundRecyclerView extends FrameLayout {
     }
 
     public void updateList(ResultModel<ItemModel> resultModel) {
+        if(resultModel == null){
+            return;
+        }
         adapter.updateItems(resultModel.getModelList());
         resultModel.getDiffResult().dispatchUpdatesTo(adapter);
     }

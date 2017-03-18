@@ -3,12 +3,12 @@ package net.fezzed.mvvmdiffutil;
 
 import android.support.v7.util.DiffUtil;
 
+import net.fezzed.mvvmdiffutil.binding.ObservableListResult;
 import net.fezzed.mvvmdiffutil.microservice.NewItemsMicroService;
 import net.fezzed.mvvmdiffutil.microservice.SwitchEvenItemsMicroService;
 import net.fezzed.mvvmdiffutil.microservice.SwitchOddItemsMicroService;
 import net.fezzed.mvvmdiffutil.model.ItemModel;
 import net.fezzed.mvvmdiffutil.model.ResultModel;
-import net.fezzed.mvvmdiffutil.view.CompoundRecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,23 +16,22 @@ import java.util.List;
 import rx.functions.Action1;
 
 public class MainViewModel {
+    private final ObservableListResult<ItemModel> modelList = new ObservableListResult<>();
     private List<ItemModel> models = new ArrayList<>();
+    private int firstItemId = 0;
 
-    private CompoundRecyclerView compoundRecyclerView;
-    private int firsItemId = 0;
-
-    public MainViewModel(CompoundRecyclerView compoundRecyclerView) {
-        this.compoundRecyclerView = compoundRecyclerView;
+    public ObservableListResult<ItemModel> getModelList() {
+        return modelList;
     }
 
-    public void onSwitchEventClick() {
+    public void onSwitchEvenClick() {
         new SwitchEvenItemsMicroService()
                 .buildObservable(models)
                 .subscribe(new Action1<ResultModel<ItemModel>>() {
                     @Override
                     public void call(ResultModel<ItemModel> resultModel) {
                         models = resultModel.getModelList();
-                        compoundRecyclerView.updateList(resultModel);
+                        modelList.set(resultModel);
                     }
                 });
 
@@ -45,20 +44,20 @@ public class MainViewModel {
                     @Override
                     public void call(ResultModel<ItemModel> resultModel) {
                         models = resultModel.getModelList();
-                        compoundRecyclerView.updateList(resultModel);
+                        modelList.set(resultModel);
                     }
                 });
     }
 
     public void onAddMoreItemsClick() {
         new NewItemsMicroService()
-                .buildObservable(firsItemId, models)
+                .buildObservable(firstItemId, models)
                 .subscribe(new Action1<ResultModel<ItemModel>>() {
                     @Override
                     public void call(ResultModel<ItemModel> resultModel) {
-                        firsItemId += 2;
+                        firstItemId += 2;
                         models = resultModel.getModelList();
-                        compoundRecyclerView.updateList(resultModel);
+                        modelList.set(resultModel);
                     }
                 });
     }
@@ -67,7 +66,7 @@ public class MainViewModel {
         List<ItemModel> emptyList = new ArrayList<>();
         DiffUtil.DiffResult diffResult = DiffUtil.calculateDiff(new ItemListDiffCallback(models, emptyList));
         models = emptyList;
-        compoundRecyclerView.updateList(new ResultModel<>(diffResult, models));
+        modelList.set(new ResultModel<>(diffResult, models));
     }
 
 }
