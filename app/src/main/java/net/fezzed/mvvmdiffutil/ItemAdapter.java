@@ -19,8 +19,6 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
 
     public ItemAdapter() {
         itemModelList = new ArrayList<>();
-        itemModelList.add(new ItemModel("First", "Second"));
-        itemModelList.add(new ItemModel("Third", "Fourth"));
     }
 
     @Override
@@ -37,6 +35,10 @@ public class ItemAdapter extends RecyclerView.Adapter<ItemAdapter.ItemViewHolder
     @Override
     public int getItemCount() {
         return itemModelList.size();
+    }
+
+    public void updateItems(List<ItemModel> itemModels) {
+        itemModelList = itemModels;
     }
 
     class ItemViewHolder extends RecyclerView.ViewHolder {

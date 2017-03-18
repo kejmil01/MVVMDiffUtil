@@ -3,4 +3,5 @@
     <string name="new_items_button">Add new items</string>
     <string name="switch_odd_button">Switch odd</string>
     <string name="switch_event_button">Switch even</string>
+    <string name="clear_items_button">Clear</string>
 </resources>

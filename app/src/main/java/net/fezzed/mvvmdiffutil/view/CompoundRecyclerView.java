@@ -4,6 +4,7 @@ package net.fezzed.mvvmdiffutil.view;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v7.util.DiffUtil;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.AttributeSet;
@@ -12,6 +13,9 @@ import android.widget.FrameLayout;
 
 import net.fezzed.mvvmdiffutil.ItemAdapter;
 import net.fezzed.mvvmdiffutil.R;
+import net.fezzed.mvvmdiffutil.model.ItemModel;
+
+import java.util.List;
 
 public class CompoundRecyclerView extends FrameLayout {
 
@@ -31,5 +35,14 @@ public class CompoundRecyclerView extends FrameLayout {
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
         adapter = new ItemAdapter();
         recyclerView.setAdapter(adapter);
+    }
+
+    public ItemAdapter getAdapter() {
+        return adapter;
+    }
+
+    public void updateList(List<ItemModel> models, DiffUtil.DiffResult diffResult) {
+        adapter.updateItems(models);
+        diffResult.dispatchUpdatesTo(adapter);
     }
 }
