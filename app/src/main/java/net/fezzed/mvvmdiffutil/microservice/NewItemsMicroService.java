@@ -11,18 +11,19 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
+import io.reactivex.Single;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 
 public class NewItemsMicroService {
-    public Observable<ResultModel<ItemModel>> buildObservable(final int firstItemId, List<ItemModel> oldItemList) {
-        return Observable.just(oldItemList)
+    public Single<ResultModel<ItemModel>> buildObservable(final int firstItemId, List<ItemModel> oldItemList) {
+        return Single.just(oldItemList)
                 .subscribeOn(Schedulers.io())
-                .map(new Func1<List<ItemModel>, ResultModel<ItemModel>>() {
+                .map(new Function<List<ItemModel>, ResultModel<ItemModel>>() {
                     @Override
-                    public ResultModel<ItemModel> call(List<ItemModel> itemModels) {
+                    public ResultModel<ItemModel> apply(@NonNull List<ItemModel> itemModels) throws Exception {
                         ItemModel itemModel = new ItemModel(firstItemId, "Item " + firstItemId + " top.", "Item " + (firstItemId + 1) + "" +
                                 " bottom.");
                         ItemModel itemModel1 = new ItemModel(firstItemId, "Item " + firstItemId + " top.", "Item " + (firstItemId + 1) +
