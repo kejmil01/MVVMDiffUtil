@@ -11,18 +11,18 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import rx.Observable;
-import rx.android.schedulers.AndroidSchedulers;
-import rx.functions.Func1;
-import rx.schedulers.Schedulers;
+import io.reactivex.Single;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.functions.Function;
+import io.reactivex.schedulers.Schedulers;
 
 public abstract class SwitchItemsMicroService {
-    public Observable<ResultModel<ItemModel>> buildObservable(List<ItemModel> oldItemList) {
-        return Observable.just(oldItemList)
+    public Single<ResultModel<ItemModel>> buildObservable(List<ItemModel> oldItemList) {
+        return Single.just(oldItemList)
                 .subscribeOn(Schedulers.io())
-                .map(new Func1<List<ItemModel>, ResultModel<ItemModel>>() {
+                .map(new Function<List<ItemModel>, ResultModel<ItemModel>>() {
                     @Override
-                    public ResultModel<ItemModel> call(List<ItemModel> itemModels) {
+                    public ResultModel<ItemModel> apply(List<ItemModel> itemModels) {
                         ArrayList<ItemModel> copy = new ArrayList<>(itemModels);
                         Collections.copy(copy, itemModels);
                         for (int i = 0; i < itemModels.size(); i++) {

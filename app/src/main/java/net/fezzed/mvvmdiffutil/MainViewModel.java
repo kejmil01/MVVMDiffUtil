@@ -13,7 +13,8 @@ import net.fezzed.mvvmdiffutil.model.ResultModel;
 import java.util.ArrayList;
 import java.util.List;
 
-import rx.functions.Action1;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.functions.Consumer;
 
 public class MainViewModel {
     private final ObservableListResult<ItemModel> modelList = new ObservableListResult<>();
@@ -27,9 +28,9 @@ public class MainViewModel {
     public void onSwitchEvenClick() {
         new SwitchEvenItemsMicroService()
                 .buildObservable(models)
-                .subscribe(new Action1<ResultModel<ItemModel>>() {
+                .subscribe(new Consumer<ResultModel<ItemModel>>() {
                     @Override
-                    public void call(ResultModel<ItemModel> resultModel) {
+                    public void accept(@NonNull ResultModel<ItemModel> resultModel) throws Exception {
                         models = resultModel.getModelList();
                         modelList.set(resultModel);
                     }
@@ -40,9 +41,9 @@ public class MainViewModel {
     public void onSwitchOddClick() {
         new SwitchOddItemsMicroService()
                 .buildObservable(models)
-                .subscribe(new Action1<ResultModel<ItemModel>>() {
+                .subscribe(new Consumer<ResultModel<ItemModel>>() {
                     @Override
-                    public void call(ResultModel<ItemModel> resultModel) {
+                    public void accept(@NonNull ResultModel<ItemModel> resultModel) throws Exception {
                         models = resultModel.getModelList();
                         modelList.set(resultModel);
                     }
@@ -52,9 +53,9 @@ public class MainViewModel {
     public void onAddMoreItemsClick() {
         new NewItemsMicroService()
                 .buildObservable(firstItemId, models)
-                .subscribe(new Action1<ResultModel<ItemModel>>() {
+                .subscribe(new Consumer<ResultModel<ItemModel>>() {
                     @Override
-                    public void call(ResultModel<ItemModel> resultModel) {
+                    public void accept(@NonNull ResultModel<ItemModel> resultModel) throws Exception {
                         firstItemId += 2;
                         models = resultModel.getModelList();
                         modelList.set(resultModel);
